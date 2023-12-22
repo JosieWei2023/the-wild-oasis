@@ -14,6 +14,7 @@ import AppLayout from "./ui/AppLayout";
 function App() {
   return (
     <>
+      {import.meta.env.SUPABASE_KEY}
       <GlobalStyles />
       <BrowserRouter>
         <Routes>
