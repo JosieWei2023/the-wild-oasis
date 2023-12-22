@@ -1,5 +1,8 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Navigate } from "react-router-dom";
 import { Routes, Route } from "react-router";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
 import DashBoard from "./pages/DashBoard";
 import Bookings from "./pages/Bookings";
 import Cabins from "./pages/Cabins";
@@ -11,9 +14,18 @@ import PageNotFound from "./pages/PageNotFound";
 import GlobalStyles from "./styles/GlobalStyles";
 import AppLayout from "./ui/AppLayout";
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 1, // 1 minute
+    },
+  },
+});
+
 function App() {
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} />
       {import.meta.env.SUPABASE_KEY}
       <GlobalStyles />
       <BrowserRouter>
@@ -33,7 +45,7 @@ function App() {
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
-    </>
+    </QueryClientProvider>
   );
 }
 
