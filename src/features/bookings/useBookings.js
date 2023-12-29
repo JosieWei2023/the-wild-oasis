@@ -12,14 +12,19 @@ export default function useBookings() {
       ? null
       : { field: "status", value: filterValue, method: "eq" };
 
+  // sort
+  const sortByRaw = searchParams.get("sortBy") || "startDate-desc";
+  const [field, direction] = sortByRaw.split("-");
+  const sortBy = { field, direction };
+
   // react-query can add dependencies to the queryKey, so that when the dependencies change, the query is refetched
   const {
     isLoading,
     data: bookings,
     error,
   } = useQuery({
-    queryKey: ["bookings", filter],
-    queryFn: () => getBookings({ filter }),
+    queryKey: ["bookings", filter, sortBy],
+    queryFn: () => getBookings({ filter, sortBy }),
   });
   return { isLoading, bookings, error };
 }
