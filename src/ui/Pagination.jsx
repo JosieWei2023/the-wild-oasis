@@ -1,5 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
+import { PAGE_SIZE } from "../utils/constants";
 
 const StyledPagination = styled.div`
   width: 100%;
@@ -57,8 +58,6 @@ const PaginationButton = styled.button`
   }
 `;
 
-const PAGE_SIZE = 10;
-
 function Pagination({ count }) {
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -84,13 +83,13 @@ function Pagination({ count }) {
 
   return (
     <StyledPagination>
-      <p>
+      <P>
         Showing <span>{(currentPage - 1) * PAGE_SIZE + 1}</span> to{" "}
         <span>
           {currentPage * PAGE_SIZE > count ? count : currentPage * PAGE_SIZE}
         </span>{" "}
         of <span>{count}</span> results
-      </p>
+      </P>
       <Buttons>
         <PaginationButton onClick={prevPage} disabled={currentPage === 1}>
           <span>Previous</span>
